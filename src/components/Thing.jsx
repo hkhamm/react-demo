@@ -29,7 +29,7 @@ class Thing extends React.Component {
 
         const newThings = things + 1;
 
-        this.setState({ things: newThings });
+        // this.setState({ things: newThings });
         dispatchSetThings(newThings);
     };
 
