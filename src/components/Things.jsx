@@ -1,42 +1,38 @@
-import PropTypes from 'prop-types';
-import React from 'react';
-import { connect } from 'react-redux';
-import { withRouter } from 'react-router';
-import ReactRouterPropTypes from 'react-router-prop-types';
-import { setThings } from '../store/actions';
+import PropTypes from 'prop-types'
+import React from 'react'
+import { connect } from 'react-redux'
+import { withRouter } from 'react-router'
+import ReactRouterPropTypes from 'react-router-prop-types'
+import { SET_THINGS, setThings } from '../store/actions'
 
-class Thing extends React.Component {
+class Things extends React.Component {
     static propTypes = {
         history: ReactRouterPropTypes.history.isRequired,
         things: PropTypes.number.isRequired,
         dispatchSetThings: PropTypes.func.isRequired
-    };
-
-    constructor(props) {
-        super(props);
-        this.state = {
-            things: props.things
-        };
     }
 
-    componentWillReceiveProps(newProps) {
-        this.setState({ things: newProps.things });
+    componentWillMount() {
+        const { dispatchSetThings } = this.props
+        const things = window.localStorage.getItem(SET_THINGS)
+        if (things !== undefined && things !== null) {
+            dispatchSetThings(parseInt(things, 10))
+        }
     }
 
     addThings = () => {
-        const { things } = this.state;
-        const { dispatchSetThings } = this.props;
+        const { dispatchSetThings, things } = this.props
+        const newThings = things + 1
+        dispatchSetThings(newThings)
+    }
 
-        const newThings = things + 1;
-
-        // this.setState({ things: newThings });
-        dispatchSetThings(newThings);
-    };
+    resetThings = () => {
+        const { dispatchSetThings } = this.props
+        dispatchSetThings(0)
+    }
 
     render() {
-        const { things } = this.state;
-        const { history } = this.props;
-
+        const { history, things } = this.props
         return (
             <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                 <div style={{ textAlign: 'center' }}>
@@ -49,25 +45,30 @@ class Thing extends React.Component {
                         </button>
                     </div>
                     <div>
+                        <button type="button" onClick={this.resetThings}>
+                            {'Reset things'}
+                        </button>
+                    </div>
+                    <div>
                         <button type="button" onClick={() => history.push('/')}>
                             {'Back'}
                         </button>
                     </div>
                 </div>
             </div>
-        );
+        )
     }
 }
 
 const mapStateToProps = state => ({
     things: state.things
-});
+})
 
 const mapDispatchToProps = dispatch => ({
     dispatchSetThings: things => dispatch(setThings(things))
-});
+})
 
 export default withRouter(connect(
     mapStateToProps,
     mapDispatchToProps
-)(Thing));
+)(Things))
