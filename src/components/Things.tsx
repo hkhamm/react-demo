@@ -67,7 +67,7 @@ interface IDispatch {
 }
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-    dispatchSetThings: things => dispatch(setThings(things)),
+    dispatchSetThings: (things: number) => dispatch(setThings(things)),
 })
 
 type TProps = IState & IDispatch & RouteComponentProps<{}>

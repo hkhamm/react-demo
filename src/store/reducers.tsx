@@ -1,3 +1,4 @@
+import { AnyAction } from 'redux'
 import { SET_THINGS } from './actions'
 
 export interface IState {
@@ -8,7 +9,7 @@ export const initialState: IState = {
     things: 0
 }
 
-const reducers = (state = initialState, action) => {
+const reducers = (state = initialState, action: AnyAction) => {
     switch (action.type) {
         case SET_THINGS:
             if (action.things !== undefined && action.things !== null) {
