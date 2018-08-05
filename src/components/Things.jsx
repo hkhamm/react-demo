@@ -39,12 +39,12 @@ class Things extends React.Component {
                     <p>
                         {`${things} things`}
                     </p>
-                    <div>
+                    <div style={{ marginBottom: '10px' }}>
                         <button type="button" onClick={this.addThings}>
                             {'More things'}
                         </button>
                     </div>
-                    <div>
+                    <div style={{ marginBottom: '10px' }}>
                         <button type="button" onClick={this.resetThings}>
                             {'Reset things'}
                         </button>
